@@ -1,31 +1,38 @@
 from django.db import models
 
 
-class Product(models.Model):
+class Color(models.Model):
+    name = models.CharField(max_length=100)
+
+class Size(models.Model):
+    name = models.IntegerField(max_length=100)
+
+class Bet(models.Model):
     name = models.CharField(max_length=255)
+    color = models.ManyToManyField(Color, blank=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, null=True)
+
     image = models.ImageField(null=True, blank=True)
-    rate = models.DecimalField(max_digits=10, decimal_places=1)
-    color = models.CharField(max_length=500)
+    description = models.TextField()
     price = models.FloatField()
-    time = models.DateTimeField()
-
-
-class Basket(models.Model):
-    name = models.CharField(max_length=265)
-    image = models.ImageField(null=True, blank=True)
-    rate = models.DecimalField(max_digits=10, decimal_places=1)
-    color = models.CharField(max_length=500)
-    price = models.FloatField()
-    time = models.DateTimeField()
-
 
 class History(models.Model):
-    name = models.CharField(max_length=260)
+    name = models.CharField(max_length=245)
+    color = models.ManyToManyField(Color, blank=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE,
+                                 null=True)
     image = models.ImageField(null=True, blank=True)
-    rate = models.PositiveIntegerField(null=True, default=0)
-    color = models.CharField(max_length=500)
+    description = models.TextField()
     price = models.FloatField()
-    time = models.DateTimeField()
+
+class Shoe(models.Model):
+    name = models.CharField(max_length=265)
+    color = models.ManyToManyField(Color, blank=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE,
+                                 null=True)
+    image = models.ImageField(null=True, blank=True)
+    description = models.TextField()
+    price = models.FloatField()
 
 
 

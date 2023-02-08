@@ -1,14 +1,33 @@
 from django.db import models
 
 
-class Basket(models.Model):
+class Product(models.Model):
     name = models.CharField(max_length=255)
-    price = models.DecimalField(max_digits=10000, decimal_places=1, related_name='baskets')
+    image = models.ImageField(null=True, blank=True)
+    rate = models.DecimalField(max_digits=10, decimal_places=1)
+    color = models.CharField(max_length=500)
+    price = models.FloatField()
+    time = models.DateTimeField()
 
-    @property
-    def products_price(self):
-        lists = [basket.price for basket in self.baskets.all()]
-        return sum(lists) if len(lists) != 0 else "error"
+
+class Basket(models.Model):
+    name = models.CharField(max_length=265)
+    image = models.ImageField(null=True, blank=True)
+    rate = models.DecimalField(max_digits=10, decimal_places=1)
+    color = models.CharField(max_length=500)
+    price = models.FloatField()
+    time = models.DateTimeField()
+
+
+class History(models.Model):
+    name = models.CharField(max_length=260)
+    image = models.ImageField(null=True, blank=True)
+    rate = models.PositiveIntegerField(null=True, default=0)
+    color = models.CharField(max_length=500)
+    price = models.FloatField()
+    time = models.DateTimeField()
+
+
 
 
 

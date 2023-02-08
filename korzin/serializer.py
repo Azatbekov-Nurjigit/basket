@@ -1,20 +1,37 @@
+from abc import ABC
 from rest_framework import serializers
-from korzin.models import Basket
-from rest_framework.exceptions import ValidationError
-from abc import ABC, ABCMeta
+from korzin.models import Basket, History, Product
+
 
 
 class BasketSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Basket
-        fields = ('name', 'price', 'products_price',)
+        fields = ('id', 'image', 'name', 'color', 'rate', 'price', 'time')
+
+
+class HistorySerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = History
+        fields = ('id', 'image', 'name', 'color', 'rate', 'price', 'time')
+
+class ProductSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Product
+        fields = ('id', 'image', 'name', 'color', 'rate', 'price', 'time')
 
 
 
-class BasketValidateSerializer(serializers.Serializer, metaclass=ABCMeta):
-    name = serializers.CharField(max_length=255, required=True)
 
+class PostValidateSerializer(serializers.Serializer, ABC):
+    image = serializers.ImageField(required=False, default='No text')
+    name = serializers.CharField(min_length=1, max_length=245)
+    color = serializers.CharField(min_length=1, max_length=255)
+    rate = serializers.IntegerField(min_value=1, max_value=10)
+    price = serializers.IntegerField(min_value=1)
 
 
 

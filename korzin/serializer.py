@@ -3,10 +3,20 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from korzin.models import Bet, History, Shoe, Color, Size
 
+class ColorSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Color
+        fields = '__all__'
+
+class SizeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Size
+        fields = '__all__'
+
 class BasketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Bet
-        fields = '__all__'
+        fields = 'name color size image description price'.split()
 
 class HistorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -19,13 +29,12 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class PostValidateSerializer(serializers.Serializer, ABC):
+class PostValidateSerializer(serializers.Serializer, type(ABC)):
+    __metaclass__ = ABC
     name = serializers.CharField(min_length=1, max_length=245)
     color = serializers.CharField(min_length=1, max_length=255)
     size = serializers.IntegerField(min_value=1)
-    image = serializers.ImageField(required=False, default='No text')
     description = serializers.CharField(required=False, default='No text')
-    price = serializers.IntegerField(min_value=1, max_value=10000000)
 
     def validate_size(self, size):
         try:

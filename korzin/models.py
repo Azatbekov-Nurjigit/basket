@@ -11,7 +11,6 @@ class Bet(models.Model):
     name = models.CharField(max_length=255)
     color = models.ManyToManyField(Color, blank=True)
     size = models.ForeignKey(Size, on_delete=models.CASCADE, null=True)
-
     image = models.ImageField(null=True, blank=True)
     description = models.TextField()
     price = models.FloatField()
@@ -28,8 +27,7 @@ class History(models.Model):
 class Shoe(models.Model):
     name = models.CharField(max_length=265)
     color = models.ManyToManyField(Color, blank=True)
-    size = models.ForeignKey(Size, on_delete=models.CASCADE,
-                                 null=True)
+    size = models.ForeignKey(Size, on_delete=models.CASCADE, null=True)
     image = models.ImageField(null=True, blank=True)
     description = models.TextField()
     price = models.FloatField()
